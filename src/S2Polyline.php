@@ -159,7 +159,7 @@ throw new UnsupportedOperationException(
 *#/
 @Override
 public boolean mayIntersect(S2Cell cell) {
-if (numVertices() == 0) {
+if (numVertices() === 0) {
 return false;
 }
 
@@ -196,7 +196,7 @@ return false;
 public int getNearestEdgeIndex(S2Point point) {
 Preconditions.checkState(numVertices() > 0, "Empty polyline");
 
-if (numVertices() == 1) {
+if (numVertices() === 1) {
 // If there is only one vertex, the "edge" is trivial, and it's the only one
 return 0;
 }
@@ -222,8 +222,8 @@ return minIndex;
 *#/
 public S2Point projectToEdge(S2Point point, int index) {
 Preconditions.checkState(numVertices() > 0, "Empty polyline");
-Preconditions.checkState(numVertices() == 1 || index < numVertices() - 1, "Invalid edge index");
-if (numVertices() == 1) {
+Preconditions.checkState(numVertices() === 1 || index < numVertices() - 1, "Invalid edge index");
+if (numVertices() === 1) {
 // If there is only one vertex, it is always closest to any given point.
 return vertex(0);
 }
@@ -237,7 +237,7 @@ return false;
 }
 
 S2Polyline thatPolygon = (S2Polyline) that;
-if (numVertices != thatPolygon.numVertices) {
+if (numVertices !== thatPolygon.numVertices) {
 return false;
 }
 

@@ -146,7 +146,7 @@ this.depth = depth;
 * Return true if this loop represents a hole in its containing polygon.
 *#/
 public boolean isHole() {
-return (depth & 1) != 0;
+return (depth & 1) !== 0;
 }
 
 /**
@@ -163,7 +163,7 @@ return numVertices;
 
 /**
 * For convenience, we make two entire copies of the vertex list available:
-* vertex(n..2*n-1) is mapped to vertex(0..n-1), where n == numVertices().
+* vertex(n..2*n-1) is mapped to vertex(0..n-1), where n === numVertices().
 *#/
 public S2Point vertex(int i) {
 try {
@@ -178,7 +178,7 @@ throw new IllegalStateException("Invalid vertex index");
 *#/
 @Override
 public int compareTo(S2Loop other) {
-if (numVertices() != other.numVertices()) {
+if (numVertices() !== other.numVertices()) {
 return this.numVertices() - other.numVertices();
 }
 // Compare the two loops' vertices, starting with each loop's
@@ -189,7 +189,7 @@ int iThis = firstLogicalVertex;
 int iOther = other.firstLogicalVertex;
 for (int i = 0; i < maxVertices; ++i, ++iThis, ++iOther) {
 int compare = vertex(iThis).compareTo(other.vertex(iOther));
-if (compare != 0) {
+if (compare !== 0) {
 return compare;
 }
 }
@@ -282,8 +282,8 @@ S2Point origin = vertex(0);
 int axis = (origin.largestAbsComponent() + 1) % 3;
 double slightlyDisplaced = origin.get(axis) + S2.M_E * 1e-10;
 origin =
-new S2Point((axis == 0) ? slightlyDisplaced : origin.x,
-(axis == 1) ? slightlyDisplaced : origin.y, (axis == 2) ? slightlyDisplaced : origin.z);
+new S2Point((axis === 0) ? slightlyDisplaced : origin.x,
+(axis === 1) ? slightlyDisplaced : origin.y, (axis === 2) ? slightlyDisplaced : origin.z);
 origin = S2Point.normalize(origin);
 
 double areaSum = 0;
@@ -356,7 +356,7 @@ return getAreaCentroid(true).getCentroid();
 // complement of B and vice versa).
 //
 // More than one of these may be true at the same time, for example if
-// A == B or A == Complement(B).
+// A === B or A === Complement(B).
 
 /**
 * Return true if the region contained by this loop is a superset of the
@@ -529,7 +529,7 @@ return 1;
 * purposes.
 *#/
 boolean boundaryApproxEquals(S2Loop b, double maxError) {
-if (numVertices() != b.numVertices()) {
+if (numVertices() !== b.numVertices()) {
 return false;
 }
 int maxVertices = numVertices();
@@ -619,7 +619,7 @@ DataEdgeIterator it = getEdgeIterator(numVertices);
 int previousIndex = -2;
 for (it.getCandidates(origin, p); it.hasNext(); it.next()) {
 int ai = it.index();
-if (previousIndex != ai - 1) {
+if (previousIndex !== ai - 1) {
 crosser.restartAt(vertices[ai]);
 }
 previousIndex = ai;
@@ -656,7 +656,7 @@ return minDistance;
 * edge lookups.
 *#/
 private final DataEdgeIterator getEdgeIterator(int expectedQueries) {
-if (index == null) {
+if (index === null) {
 index = new S2EdgeIndex() {
 @Override
 protected int getNumEdges() {
@@ -699,7 +699,7 @@ HashMap
 , Integer> vmap = Maps.newHashMap();
 for (int i = 0; i < numVertices; ++i) {
 Integer previousVertexIndex = vmap.put(vertex(i), i);
-if (previousVertexIndex != null) {
+if (previousVertexIndex !== null) {
 log.info("Duplicate vertices: " + previousVertexIndex + " and " + i);
 return false;
 }
@@ -723,7 +723,7 @@ int b2 = (b1 + 1) % numVertices;
 // the edges share a vertex -- and in S2 space, where edges are always
 // great circle segments on a sphere, edges can only intersect at most
 // once, so we don't need to do further checks in that case either.
-if (a1 != b2 && a2 != b1 && a1 != b1) {
+if (a1 !== b2 && a2 !== b1 && a1 !== b1) {
 // WORKAROUND(shakusa, ericv): S2.robustCCW() currently
 // requires arbitrary-precision arithmetic to be truly robust. That
 // means it can give the wrong answers in cases where we are trying
@@ -740,7 +740,7 @@ if (abcNearlyLinear && abdNearlyLinear) {
 continue;
 }
 
-if (previousIndex != b1) {
+if (previousIndex !== b1) {
 crosser.restartAt(vertex(b1));
 }
 
@@ -811,7 +811,7 @@ public static boolean isValid(List
 
     originInside = false; // Initialize before calling Contains().
     boolean v1Inside = S2.orderedCCW(S2.ortho(vertex(1)), vertex(0), vertex(2), vertex(1));
-    if (v1Inside != contains(vertex(1))) {
+    if (v1Inside !== contains(vertex(1))) {
     originInside = true;
     }
     }
@@ -849,7 +849,7 @@ public static boolean isValid(List
     * value is in the range 1..num_vertices_ if found.
     *#/
     private int findVertex(S2Point p) {
-    if (vertexToIndex == null) {
+    if (vertexToIndex === null) {
     vertexToIndex = new HashMap
     <S2Point
     , Integer>();
@@ -858,7 +858,7 @@ public static boolean isValid(List
     }
     }
     Integer index = vertexToIndex.get(p);
-    if (index == null) {
+    if (index === null) {
     return -1;
     } else {
     return index;
@@ -888,7 +888,7 @@ public static boolean isValid(List
     int previousIndex = -2;
     for (it.getCandidates(b.vertex(j), b.vertex(j + 1)); it.hasNext(); it.next()) {
     int i = it.index();
-    if (previousIndex != i - 1) {
+    if (previousIndex !== i - 1) {
     crosser.restartAt(vertex(i));
     }
     previousIndex = i;

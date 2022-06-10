@@ -18,16 +18,16 @@ class S2Projections {
     // and the maximum is at most MAX_AREA.GetValue(k). The average area of all
     // cells at level k is exactly AVG_AREA.GetValue(k).
 //  public static final Metric MIN_AREA = new Metric(2,
-//    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? 1 / (3 * Math.sqrt(3)) : // 0.192
-//      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? (S2.M_PI * S2.M_PI)
+//    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? 1 / (3 * Math.sqrt(3)) : // 0.192
+//      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? (S2.M_PI * S2.M_PI)
 //        / (16 * S2.M_SQRT2) : // 0.436
-//        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION
+//        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION
 //          ? 2 * S2.M_SQRT2 / 9 : // 0.314
 //          0);
 //  public static final Metric MAX_AREA = new Metric(2,
-//    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? 1 : // 1.000
-//      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? S2.M_PI * S2.M_PI / 16 : // 0.617
-//        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION
+//    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? 1 : // 1.000
+//      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? S2.M_PI * S2.M_PI / 16 : // 0.617
+//        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION
 //          ? 0.65894981424079037 : // 0.659
 //          0);
 //  public static final Metric AVG_AREA = new Metric(2, S2.M_PI / 6); // 0.524)
@@ -41,14 +41,14 @@ class S2Projections {
     // level k is MAX_ANGLE_SPAN.GetValue(k), and the average angle span for all
     // cells at level k is approximately AVG_ANGLE_SPAN.GetValue(k).
 //  public static final Metric MIN_ANGLE_SPAN = new Metric(1,
-//    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? 0.5 : // 0.500
-//      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? S2.M_PI / 4 : // 0.785
-//        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION ? 2. / 3 : // 0.667
+//    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? 0.5 : // 0.500
+//      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? S2.M_PI / 4 : // 0.785
+//        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION ? 2. / 3 : // 0.667
 //          0);
 //  public static final Metric MAX_ANGLE_SPAN = new Metric(1,
-//    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? 1 : // 1.000
-//      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? S2.M_PI / 4 : // 0.785
-//        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION
+//    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? 1 : // 1.000
+//      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? S2.M_PI / 4 : // 0.785
+//        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION
 //          ? 0.85244858959960922 : // 0.852
 //          0);
 //  public static final Metric AVG_ANGLE_SPAN = new Metric(1, S2.M_PI / 4); // 0.785
@@ -73,18 +73,18 @@ class S2Projections {
     // point on one edge of a cell to the closest point on the opposite edge.
     // For example, this is useful when "growing" regions by a fixed distance.
     public static function MIN_WIDTH() {
-        if (self::S2_PROJECTION == self::S2_LINEAR_PROJECTION) $deriv = 1 / sqrt(6);
-        else if (self::S2_PROJECTION == self::S2_TAN_PROJECTION) $deriv = S2::M_PI / (4 * S2::M_SQRT2);
-        else if (self::S2_PROJECTION == self::S2_QUADRATIC_PROJECTION) $deriv = S2::M_SQRT2 / 3;
+        if (self::S2_PROJECTION === self::S2_LINEAR_PROJECTION) $deriv = 1 / sqrt(6);
+        else if (self::S2_PROJECTION === self::S2_TAN_PROJECTION) $deriv = S2::M_PI / (4 * S2::M_SQRT2);
+        else if (self::S2_PROJECTION === self::S2_QUADRATIC_PROJECTION) $deriv = S2::M_SQRT2 / 3;
         else $deriv = 0;
         return new Metric(1, $deriv);
     }
 //
 //  public static final Metric MAX_WIDTH = new Metric(1, MAX_ANGLE_SPAN.deriv());
 //  public static final Metric AVG_WIDTH = new Metric(1,
-//    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? 0.70572967292222848 : // 0.706
-//      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? 0.71865931946258044 : // 0.719
-//        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION
+//    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? 0.70572967292222848 : // 0.706
+//      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? 0.71865931946258044 : // 0.719
+//        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION
 //          ? 0.71726183644304969 : // 0.717
 //          0);
 
@@ -98,15 +98,15 @@ class S2Projections {
     // between adjacent cell centers along the space-filling Hilbert curve for
     // cells at any given level.
 //  public static final Metric MIN_EDGE = new Metric(1,
-//    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? S2.M_SQRT2 / 3 : // 0.471
-//      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? S2.M_PI / (4 * S2.M_SQRT2) : // 0.555
-//        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION ? S2.M_SQRT2 / 3 : // 0.471
+//    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? S2.M_SQRT2 / 3 : // 0.471
+//      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? S2.M_PI / (4 * S2.M_SQRT2) : // 0.555
+//        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION ? S2.M_SQRT2 / 3 : // 0.471
 //          0);
 //  public static final Metric MAX_EDGE = new Metric(1, MAX_ANGLE_SPAN.deriv());
 //  public static final Metric AVG_EDGE = new Metric(1,
-//    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? 0.72001709647780182 : // 0.720
-//      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? 0.73083351627336963 : // 0.731
-//        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION
+//    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? 0.72001709647780182 : // 0.720
+//      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? 0.73083351627336963 : // 0.731
+//        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION
 //          ? 0.72960687319305303 : // 0.730
 //          0);
     /*
@@ -120,21 +120,21 @@ class S2Projections {
   // example, the distance from an arbitrary point to the closest cell center
   // at a given level is at most half the maximum diagonal length.
   public static final Metric MIN_DIAG = new Metric(1,
-    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? S2.M_SQRT2 / 3 : // 0.471
-      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? S2.M_PI / (3 * S2.M_SQRT2) : // 0.740
-        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION
+    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? S2.M_SQRT2 / 3 : // 0.471
+      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? S2.M_PI / (3 * S2.M_SQRT2) : // 0.740
+        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION
           ? 4 * S2.M_SQRT2 / 9 : // 0.629
           0);
   public static final Metric MAX_DIAG = new Metric(1,
-    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? S2.M_SQRT2 : // 1.414
-      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? S2.M_PI / Math.sqrt(6) : // 1.283
-        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION
+    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? S2.M_SQRT2 : // 1.414
+      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? S2.M_PI / Math.sqrt(6) : // 1.283
+        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION
           ? 1.2193272972170106 : // 1.219
           0);
   public static final Metric AVG_DIAG = new Metric(1,
-    S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? 1.0159089332094063 : // 1.016
-      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? 1.0318115985978178 : // 1.032
-        S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION
+    S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? 1.0159089332094063 : // 1.016
+      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? 1.0318115985978178 : // 1.032
+        S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION
           ? 1.03021136949923584 : // 1.030
           0);
 
@@ -142,9 +142,9 @@ class S2Projections {
   // the edge aspect ratio of a cell is defined as the ratio of its longest
   // edge length to its shortest edge length.
   public static final double MAX_EDGE_ASPECT =
-      S2_PROJECTION == Projections.S2_LINEAR_PROJECTION ? S2.M_SQRT2 : // 1.414
-      S2_PROJECTION == Projections.S2_TAN_PROJECTION ? S2.M_SQRT2 : // 1.414
-      S2_PROJECTION == Projections.S2_QUADRATIC_PROJECTION ? 1.44261527445268292 : // 1.443
+      S2_PROJECTION === Projections.S2_LINEAR_PROJECTION ? S2.M_SQRT2 : // 1.414
+      S2_PROJECTION === Projections.S2_TAN_PROJECTION ? S2.M_SQRT2 : // 1.414
+      S2_PROJECTION === Projections.S2_QUADRATIC_PROJECTION ? 1.44261527445268292 : // 1.443
       0;
 
   // This is the maximum diagonal aspect ratio over all cells at any level,

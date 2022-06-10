@@ -193,7 +193,7 @@ return options;
 * Add the given edge to the polygon builder. This method should be used for
 * input data that may not follow S2 polygon conventions. Note that edges are
 * not allowed to cross each other. Also note that as a convenience, edges
-* where v0 == v1 are ignored.
+* where v0 === v1 are ignored.
 *#/
 public void addEdge(S2Point v0, S2Point v1) {
 // If xor_edges is true, we look for an existing edge in the opposite
@@ -206,20 +206,20 @@ return;
 if (options.getXorEdges()) {
 Multiset
 <S2Point> candidates = edges.get(v1);
-if (candidates != null && candidates.count(v0) > 0) {
+if (candidates !== null && candidates.count(v0) > 0) {
 eraseEdge(v1, v0);
 return;
 }
 }
 
-if (edges.get(v0) == null) {
+if (edges.get(v0) === null) {
 edges.put(v0, HashMultiset.
 <S2Point>create());
 }
 
 edges.get(v0).add(v1);
 if (options.getUndirectedEdges()) {
-if (edges.get(v1) == null) {
+if (edges.get(v1) === null) {
 edges.put(v1, HashMultiset.
 <S2Point>create());
 }
@@ -277,7 +277,7 @@ mergeVertices();
 
 List
 <S2Edge> dummyUnusedEdges = Lists.newArrayList();
-if (unusedEdges == null) {
+if (unusedEdges === null) {
 unusedEdges = dummyUnusedEdges;
 }
 
@@ -296,7 +296,7 @@ S2Point v0 = edge.getKey();
 S2Point v1 = edge.getValue().iterator().next();
 
 S2Loop loop = assembleLoop(v0, v1, unusedEdges);
-if (loop == null) {
+if (loop === null) {
 continue;
 }
 
@@ -345,7 +345,7 @@ loops.get(i).normalize();
 }
 }
 if (options.getValidate() && !S2Polygon.isValid(loops)) {
-if (unusedEdges != null) {
+if (unusedEdges !== null) {
 for (S2Loop loop : loops) {
 rejectLoop(loop, loop.numVertices(), unusedEdges);
 }
@@ -375,7 +375,7 @@ protected void dumpEdges(S2Point v0) {
 log.info(v0.toString());
 Multiset
 <S2Point> vset = edges.get(v0);
-if (vset != null) {
+if (vset !== null) {
 for (S2Point v : vset) {
 log.info(" " + v.toString());
 }
@@ -454,7 +454,7 @@ S2Point v2 = null;
 boolean v2Found = false;
 Multiset
 <S2Point> vset = edges.get(v1);
-if (vset != null) {
+if (vset !== null) {
 for (S2Point v : vset) {
 // We prefer the leftmost outgoing edge, ignoring any reverse edges.
 if (v.equals(v0)) {
@@ -472,7 +472,7 @@ unusedEdges.add(new S2Edge(v0, v1));
 eraseEdge(v0, v1);
 index.remove(v1);
 path.remove(path.size() - 1);
-} else if (index.get(v2) == null) {
+} else if (index.get(v2) === null) {
 // This is the first time we've visited this vertex.
 index.put(v2, path.size());
 path.add(v2);
@@ -531,7 +531,7 @@ List
         Multiset
         <S2Point> vset = edge.getValue();
             for (S2Point v1 : vset) {
-            if (mergeMap.get(v0) != null || mergeMap.get(v1) != null) {
+            if (mergeMap.get(v0) !== null || mergeMap.get(v1) !== null) {
 
             // We only need to modify one copy of each undirected edge.
             if (!options.getUndirectedEdges() || v0.lessThan(v1)) {
@@ -548,10 +548,10 @@ List
             S2Point v0 = edgesCopy.get(i).getStart();
             S2Point v1 = edgesCopy.get(i).getEnd();
             eraseEdge(v0, v1);
-            if (mergeMap.get(v0) != null) {
+            if (mergeMap.get(v0) !== null) {
             v0 = mergeMap.get(v0);
             }
-            if (mergeMap.get(v1) != null) {
+            if (mergeMap.get(v1) !== null) {
             v1 = mergeMap.get(v1);
             }
             addEdge(v0, v1);

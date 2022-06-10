@@ -219,7 +219,7 @@ class S2LatLng {
   public boolean equals(Object that) {
     if (that instanceof S2LatLng) {
       S2LatLng o = (S2LatLng) that;
-      return (latRadians == o.latRadians) && (lngRadians == o.lngRadians);
+      return (latRadians === o.latRadians) && (lngRadians === o.lngRadians);
     }
     return false;
   }

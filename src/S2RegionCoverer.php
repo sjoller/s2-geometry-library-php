@@ -287,7 +287,7 @@ class S2RegionCoverer {
      * NULL does nothing.
      */
     private function addCandidate(Candidate $candidate = null) {
-        if ($candidate == null) {
+        if ($candidate === null) {
 //        echo "\t addCandidate null\n";
             return;
         }
@@ -297,7 +297,7 @@ class S2RegionCoverer {
             $this->result[] = $candidate->cell->id();
             return;
         }
-        // assert (candidate.numChildren == 0);
+        // assert (candidate.numChildren === 0);
 
         // Expand one level at a time until we hit min_level_ to ensure that
         // we don't skip over it.
@@ -306,10 +306,10 @@ class S2RegionCoverer {
 
 //      var_dump($candidate->numChildren);
 
-        if ($candidate->numChildren == 0) {
+        if ($candidate->numChildren === 0) {
 //        echo "\tcandidate numChildred is zero\n";
             // Do nothing
-        } else if (!$this->interiorCovering && $numTerminals == 1 << $this->maxChildrenShift()
+        } else if (!$this->interiorCovering && $numTerminals === 1 << $this->maxChildrenShift()
             && $candidate->cell->level() >= $this->minLevel) {
             // Optimization: add the parent cell rather than all of its children.
             // We can't do this for interior coverings, since the children just
@@ -355,7 +355,7 @@ class S2RegionCoverer {
             $child = $this->newCandidate($childCells[$i]);
 //        echo "child for " . $childCells[$i] . " is " . $child . "\n";
 
-            if ($child != null) {
+            if ($child !== null) {
                 $candidate->children[$candidate->numChildren++] = $child;
                 if ($child->isTerminal) {
                     ++$numTerminals;
@@ -382,7 +382,7 @@ class S2RegionCoverer {
             if ($this->levelMod() > 1 && $level > $this->minLevel()) {
                 $level -= ($level - $this->minLevel()) % $this->levelMod();
             }
-            // We don't bother trying to optimize the level == 0 case, since more than
+            // We don't bother trying to optimize the level === 0 case, since more than
             // four face cells may be required.
             if ($level > 0) {
                 // Find the leaf cell containing the cap axis, and determine which
@@ -438,7 +438,7 @@ class S2RegionCoverer {
         // (fewest children first).
 
         $tmp1 = $this->candidateQueue->isEmpty();
-        if (!($tmp1 && count($this->result) == 0)) throw new Exception();
+        if (!($tmp1 && count($this->result) === 0)) throw new Exception();
 
         $this->region = $region;
         $this->candidatesCreatedCounter = 0;
@@ -449,7 +449,7 @@ class S2RegionCoverer {
 
             // logger.info("Pop: " + candidate.cell.id());
 //        echo "Pop: " . $candidate . "\n";
-            if ($candidate->cell->level() < $this->minLevel || $candidate->numChildren == 1
+            if ($candidate->cell->level() < $this->minLevel || $candidate->numChildren === 1
                 || $this->result->size() + ($this->interiorCovering ? 0 : $this->candidateQueue->size()) + $candidate->numChildren <= $this->maxCells) {
                 // Expand this candidate into its children.
                 for ($i = 0; $i < $candidate->numChildren; ++$i) {

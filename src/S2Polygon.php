@@ -78,12 +78,12 @@ class S2Polygon implements S2Region {
      */
     public function compareTo(S2Polygon $other) {
       // If number of loops differ, use that.
-        if ($this->numLoops() != $other->numLoops()) {
+        if ($this->numLoops() !== $other->numLoops()) {
             return $this->numLoops() - $other->numLoops();
         }
         for ($i = 0; $i < $this->numLoops(); ++$i) {
             $compare = $this->loops->get($i)->compareTo($other->loops->get($i));
-            if ($compare != 0) {
+            if ($compare !== 0) {
                 return $compare;
             }
         }
@@ -124,11 +124,11 @@ class S2Polygon implements S2Region {
         $this->sortValueLoops($loopMap);
      
       // Reorder the loops in depth-first traversal order.
-      // Starting at null == starting at the root
+      // Starting at null === starting at the root
         $this->initLoop(null, -1, $loopMap);
      
       // TODO(dbeaumont): Add tests or preconditions for these asserts (here and elesewhere).
-      // forall i != j : containsChild(loop(i), loop(j), loopMap) == loop(i).containsNested(loop(j)));
+      // forall i !== j : containsChild(loop(i), loop(j), loopMap) === loop(i).containsNested(loop(j)));
      
       // Compute the bounding rectangle of the entire polygon.
         $hasHoles = false;
@@ -209,7 +209,7 @@ class S2Polygon implements S2Region {
      */
     public function getParent($k) {
         $depth = $this->loop($k)->depth();
-        if ($depth == 0) {
+        if ($depth === 0) {
             return -1; // Optimization.
         }
         while (--$k >= 0 && $this->loop($k)->depth() >= $depth) {
@@ -320,7 +320,7 @@ class S2Polygon implements S2Region {
             /**
      * The point 'p' does not need to be normalized.
      */
-            if ($this->numLoops() == 1) {
+            if ($this->numLoops() === 1) {
                 return $this->loop(0)->contains($p); // Optimization.
             }
             if (!$this->bound->contains($p)) {
@@ -338,7 +338,7 @@ class S2Polygon implements S2Region {
 
             // If both polygons have one loop, use the more efficient S2Loop method.
         // Note that S2Loop.contains does its own bounding rectangle check.
-        if ($this->numLoops() == 1 && $b->numLoops() == 1) {
+        if ($this->numLoops() === 1 && $b->numLoops() === 1) {
             return $this->loop(0)->contains($b->loop(0));
         }
 
@@ -385,7 +385,7 @@ class S2Polygon implements S2Region {
 
 // If both polygons have one loop, use the more efficient S2Loop method.
 // Note that S2Loop.intersects does its own bounding rectangle check.
-        if ($this->numLoops() == 1 && $b->numLoops() == 1) {
+        if ($this->numLoops() === 1 && $b->numLoops() === 1) {
             return $this->loop(0)->intersects($b->loop(0));
         }
 
@@ -550,11 +550,11 @@ class S2Polygon implements S2Region {
      * // duplicate edges are encountered, both are included in the output. The
      * // "addSharedEdges" flag allows one of these two copies to be removed by
      * // changing its intersection parameter from 0 to 1.
-     * double t = (a0 == b0 || a0 == b1) ? 0 : 1;
-     * if (!addSharedEdges && a1 == b1) {
+     * double t = (a0 === b0 || a0 === b1) ? 0 : 1;
+     * if (!addSharedEdges && a1 === b1) {
      * t = 1;
      * }
-     * intersections.add(new ParametrizedS2Point(t, t == 0 ? a0 : a1));
+     * intersections.add(new ParametrizedS2Point(t, t === 0 ? a0 : a1));
      * }
      * }
      *
@@ -575,7 +575,7 @@ class S2Polygon implements S2Region {
      * S2Edge fromTo = bIndex.edgeFromTo(it.index());
      * from = fromTo.getStart();
      * to = fromTo.getEnd();
-     * if (previousTo != from) {
+     * if (previousTo !== from) {
      * crosser.restartAt(from);
      * }
      * int crossing = crosser.robustCrossing(to);
@@ -621,8 +621,8 @@ class S2Polygon implements S2Region {
      * if (inside) {
      * intersections.add(new ParametrizedS2Point(0.0, a0));
      * }
-     * inside = ((intersections.size() & 0x1) == 0x1);
-     * // assert ((b.contains(a1) ^ invertB) == inside);
+     * inside = ((intersections.size() & 0x1) === 0x1);
+     * // assert ((b.contains(a1) ^ invertB) === inside);
      * if (inside) {
      * intersections.add(new ParametrizedS2Point(1.0, a1));
      * }
@@ -664,7 +664,7 @@ class S2Polygon implements S2Region {
      *
      * public void initToIntersectionSloppy(
      * final S2Polygon a, final S2Polygon b, S1Angle vertexMergeRadius) {
-     * Preconditions.checkState(numLoops() == 0);
+     * Preconditions.checkState(numLoops() === 0);
      * if (!a.bound.intersects(b.bound)) {
      * return;
      * }
@@ -689,7 +689,7 @@ class S2Polygon implements S2Region {
      * }
      *
      * public void initToUnionSloppy(final S2Polygon a, final S2Polygon b, S1Angle vertexMergeRadius) {
-     * Preconditions.checkState(numLoops() == 0);
+     * Preconditions.checkState(numLoops() === 0);
      *
      * // We want the boundary of A clipped to the exterior of B,
      * // plus the boundary of B clipped to the exterior of A,
@@ -786,11 +786,11 @@ class S2Polygon implements S2Region {
      * S2Loop lastParent = null;
      * for (int i = 0; i < numLoops(); ++i) {
      * S2Loop child = loop(i);
-     * if (child.depth() == 0) {
+     * if (child.depth() === 0) {
      * continue;
      * }
      * S2Loop parent = loop(getParent(i));
-     * if (parent != lastParent) {
+     * if (parent !== lastParent) {
      * vertices.clear();
      * for (int j = 0; j < parent.numVertices(); ++j) {
      * vertices.add(parent.vertex(j));
@@ -818,9 +818,9 @@ class S2Polygon implements S2Region {
      * testing purposes.
      *#/
      * boolean boundaryApproxEquals(S2Polygon b, double maxError) {
-     * if (numLoops() != b.numLoops()) {
+     * if (numLoops() !== b.numLoops()) {
      * log.severe(
-     * "!= loops: " + Integer.toString(numLoops()) + " vs. " + Integer.toString(b.numLoops()));
+     * "!== loops: " + Integer.toString(numLoops()) + " vs. " + Integer.toString(b.numLoops()));
      * return false;
      * }
      *
@@ -831,7 +831,7 @@ class S2Polygon implements S2Region {
      * boolean success = false;
      * for (int j = 0; j < numLoops(); ++j) {
      * S2Loop bLoop = b.loop(j);
-     * if (bLoop.depth() == aLoop.depth() && bLoop.boundaryApproxEquals(aLoop, maxError)) {
+     * if (bLoop.depth() === aLoop.depth() && bLoop.boundaryApproxEquals(aLoop, maxError)) {
      * success = true;
      * break;
      * }
@@ -862,7 +862,7 @@ class S2Polygon implements S2Region {
      * @param S2Cell $cell
      *#/
     public function contains($cell) {
-        if ($this->numLoops() == 1) {
+        if ($this->numLoops() === 1) {
             return $this->loop(0)->contains($cell);
         }
         $cellBound = $cell->getRectBound();
@@ -882,7 +882,7 @@ class S2Polygon implements S2Region {
      * relationship could not be determined.
      */
     public function mayIntersect(S2Cell $cell) {
-        if ($this->numLoops() == 1) {
+        if ($this->numLoops() === 1) {
             return $this->loop(0)->mayIntersect($cell);
         }
         $cellBound = $cell->getRectBound();
@@ -906,7 +906,7 @@ class S2Polygon implements S2Region {
     private static function insertLoop(S2Loop $newLoop, S2Loop $parent, $loopMap) {
         $children = $loopMap[$parent];
 
-        if ($children == null) {
+        if ($children === null) {
             $children = [];
             $loopMap[$parent] = $children;
         }
@@ -920,7 +920,7 @@ class S2Polygon implements S2Region {
      
       // No loop may contain the complement of another loop. (Handling this case
       // is significantly more complicated.)
-      // assert (parent == null || !newLoop.containsNested(parent));
+      // assert (parent === null || !newLoop.containsNested(parent));
      
       // Some of the children of the parent loop may now be children of
       // the new loop.
@@ -928,7 +928,7 @@ class S2Polygon implements S2Region {
         for ($i = 0; $i < count($children);) {
             $child = $children[$i];
             if ($newLoop->containsNested($child)) {
-                if ($newChildren == null) {
+                if ($newChildren === null) {
                     $newChildren = [];
                     $loopMap[$newLoop] = $newChildren;
                 }
@@ -942,12 +942,12 @@ class S2Polygon implements S2Region {
     }
 
     private function initLoop(S2Loop $loop, $depth, $loopMap) {
-        if ($loop != null) {
+        if ($loop !== null) {
             $loop->setDepth($depth);
             $this->loops->add($loop);
         }
         $children = $loopMap[$loop];
-        if ($children != null) {
+        if ($children !== null) {
             foreach ($children as $child) {
                 $this->initLoop($child, $depth + 1, $loopMap);
             }
@@ -1001,7 +1001,7 @@ class S2Polygon implements S2Region {
      * if (b.loop(j).sign() > 0) {
      * continue;
      * }
-     * if (containsOrCrosses(b.loop(j)) != 0) {
+     * if (containsOrCrosses(b.loop(j)) !== 0) {
      * // Hole of B is contained by A, or the boundaries intersect.
      * return false;
      * }
@@ -1015,7 +1015,7 @@ class S2Polygon implements S2Region {
      * if (b.loop(j).sign() < 0) {
      * continue;
      * }
-     * if (containsOrCrosses(b.loop(j)) != 0) {
+     * if (containsOrCrosses(b.loop(j)) !== 0) {
      * // Shell of B is contained by A, or the boundaries intersect.
      * return true;
      * }
@@ -1073,7 +1073,7 @@ class S2Polygon implements S2Region {
      *
      * @Override
      * public boolean equals(Object o) {
-     * if (o == null || !(o instanceof UndirectedEdge)) {
+     * if (o === null || !(o instanceof UndirectedEdge)) {
      * return false;
      * }
      * UndirectedEdge other = (UndirectedEdge) o;
@@ -1130,7 +1130,7 @@ class S2Polygon implements S2Region {
      * @Override
      * public int compareTo(ParametrizedS2Point o) {
      * int compareTime = Double.compare(time, o.time);
-     * if (compareTime != 0) {
+     * if (compareTime !== 0) {
      * return compareTime;
      * }
      * return point.compareTo(o.point);
